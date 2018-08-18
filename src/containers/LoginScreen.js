@@ -7,7 +7,7 @@ import firebase from 'react-native-firebase'
 
 import {
   backgroundColor, primaryColorBrown, primaryColorRed,
-  primaryColorGreen
+  primaryColorGreen, commonStyles
 } from '../styles'
 
 class LoginScreen extends Component {
@@ -79,14 +79,14 @@ class LoginScreen extends Component {
         <Text style={styles.textError}>{this.state.error}</Text>
         <View style={[styles.row, { justifyContent: 'center' }]}>
           <TouchableOpacity
-            style={[styles.button, { backgroundColor: primaryColorGreen }]}
+            style={[commonStyles.button, { backgroundColor: primaryColorGreen }]}
             onPress={this.onSignUp}>
             {this.state.inSigningUp === true
               ? <ActivityIndicator size='small' color='white'/>
               : <Text style={{ color: 'white' }}>Sign Up</Text>}
           </TouchableOpacity>
           <TouchableOpacity
-            style={[styles.button, { backgroundColor: primaryColorRed }]}
+            style={[commonStyles.button, { backgroundColor: primaryColorRed }]}
             onPress={this.onSignIn}>
             {this.state.isSigningIn === true
               ? <ActivityIndicator size='small' color='white'/>
@@ -125,14 +125,6 @@ const styles = StyleSheet.create({
   textError: {
     color: primaryColorRed,
     marginTop: 15
-  },
-  button: {
-    borderRadius: 30,
-    height: 40,
-    width: 100,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginHorizontal: 10
   }
 })
 
