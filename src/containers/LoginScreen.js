@@ -16,13 +16,25 @@ class LoginScreen extends Component {
     inSigningUp: false
   }
 
+  onPushDataToFirebase = (user) => {
+    firebase.database().ref('/users').child(user.uid).set({
+      displayName: '',
+      phoneNumber: '',
+      address: ''
+    })
+  }
+
   onSignUp = () => {
     this.setState({ inSigningUp: true })
     const email = this.state.email
     const password = this.state.password
 
     firebase.auth().createUserAndRetrieveDataWithEmailAndPassword(email, password)
-      .then(res => this.setState({ inSigningUp: false }))
+      .then(res => {
+        this.setState({ inSigningUp: false })
+        this.onPushDataToFirebase(res.user._user)
+        this.props.navigation.navigate('HomeScreen')
+      })
       .catch(err => this.setState({
         error: err.toString(),
         password: '',
@@ -36,7 +48,10 @@ class LoginScreen extends Component {
     const password = this.state.password
 
     firebase.auth().signInAndRetrieveDataWithEmailAndPassword(email, password)
-      .then(res => this.setState({ isSigningIn: false }))
+      .then(res => {
+        this.setState({ isSigningIn: false })
+        this.props.navigation.navigate('HomeScreen')
+      })
       .catch(err => this.setState({
         error: err.toString(),
         isSigningIn: false

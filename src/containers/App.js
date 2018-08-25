@@ -12,7 +12,7 @@ import TabMenu from './TabMenu'
 import TabHistory from './TabHistory'
 import TabInfo from './TabInfo'
 import TabOrder from './TabOrder';
-import { primaryColorGreen } from '../styles'
+import { primaryColorGreen, primaryColorRed } from '../styles'
 
 const BottomNavigation = createBottomTabNavigator(
   {
@@ -38,7 +38,23 @@ const BottomNavigation = createBottomTabNavigator(
 
         // You can return any component that you like here! We usually use an
         // icon component from react-native-vector-icons
-        return <Icon name={iconName} size={25} color={tintColor} />;
+        return <View>
+          <Icon name={iconName} size={25} color={tintColor} />
+          {routeName === 'Order' &&
+            <View style={{
+              position: 'absolute',
+              left: 15,
+              backgroundColor: primaryColorRed,
+              width: 20,
+              height: 20,
+              borderRadius: 10,
+              justifyContent: 'center',
+              alignItems: 'center'
+            }}>
+              <Text style={{ color: 'white', fontSize: 12 }}>1</Text>
+            </View>
+          }
+        </View>;
       },
     }),
     tabBarOptions: {

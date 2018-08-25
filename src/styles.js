@@ -20,5 +20,12 @@ export const commonStyles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginHorizontal: 10
+  },
+  fontTitleScreen: {
+    fontSize: 20,
+    color: primaryColorRed,
+    fontWeight: 'bold',
+    marginHorizontal: 7,
+    marginVertical: 10
   }
 })
