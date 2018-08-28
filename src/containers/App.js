@@ -4,7 +4,6 @@ import {
   View,
 } from 'react-native';
 import { createBottomTabNavigator, createSwitchNavigator } from 'react-navigation'
-import Icon from 'react-native-vector-icons/FontAwesome'
 
 import SplashScreen from './SplashScreen';
 import LoginScreen from './LoginScreen';
@@ -12,7 +11,13 @@ import TabMenu from './TabMenu'
 import TabHistory from './TabHistory'
 import TabInfo from './TabInfo'
 import TabOrder from './TabOrder';
-import { primaryColorGreen, primaryColorRed } from '../styles'
+import { primaryColorGreen } from '../styles'
+
+import { PersistGate } from 'redux-persist/integration/react'
+import { Provider } from 'react-redux'
+import configureStore from '../configureStore'
+import IconWithNoti from '../components/IconWithNoti';
+const configure = configureStore()
 
 const BottomNavigation = createBottomTabNavigator(
   {
@@ -38,23 +43,10 @@ const BottomNavigation = createBottomTabNavigator(
 
         // You can return any component that you like here! We usually use an
         // icon component from react-native-vector-icons
-        return <View>
-          <Icon name={iconName} size={25} color={tintColor} />
-          {routeName === 'Order' &&
-            <View style={{
-              position: 'absolute',
-              left: 15,
-              backgroundColor: primaryColorRed,
-              width: 20,
-              height: 20,
-              borderRadius: 10,
-              justifyContent: 'center',
-              alignItems: 'center'
-            }}>
-              <Text style={{ color: 'white', fontSize: 12 }}>1</Text>
-            </View>
-          }
-        </View>;
+        return <IconWithNoti
+          iconName={iconName}
+          routeName={routeName}
+          tintColor={tintColor} />
       },
     }),
     tabBarOptions: {
@@ -76,7 +68,11 @@ class App extends Component {
   state = {}
   render() {
     return (
-      <SwitchNavigation />
+      <Provider store={configure.store}>
+        <PersistGate loading={null} persistor={configure.persistor}>
+          <SwitchNavigation />
+        </PersistGate>
+      </Provider>
     );
   }
 }
